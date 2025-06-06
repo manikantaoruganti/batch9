@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClassSync - Student Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <div>
+                <h1>ClassSync</h1>
+                <p>Student Hub</p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <button class="active" onclick="showSection('dashboard')">
+            <i class="fas fa-book-open"></i> Dashboard
+        </button>
+        <button onclick="showSection('files')">
+            <i class="fas fa-file-alt"></i> Files
+        </button>
+        <button onclick="showSection('discussions')">
+            <i class="fas fa-comments"></i> Discussions
+        </button>
+    </nav>
+
+    <main>
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="welcome">
+                <h2><i class="fas fa-users"></i> Welcome to ClassSync</h2>
+                <p>Share notes and resources with your classmates!</p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="value" id="fileCount">0</div>
+                        <div class="label">Files</div>
+                    </div>
+                    <div class="stat">
+                        <div class="value">4</div>
+                        <div class="label">Departments</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="departments">
+                <div class="dept-card">
+                    <h3>Computer Science</h3>
+                    <p>Click to see subjects</p>
+                    <div class="subjects">
+                        <div>• Database Systems</div>
+                        <div>• Data Structures</div>
+                        <div>• Operating Systems</div>
+                        <div>• Computer Networks</div>
+                        <div>• Web Development</div>
+                        <div>• Python Programming</div>
+                        <div>• Java Programming</div>
+                        <div>• Software Engineering</div>
+                    </div>
+                </div>
+
+                <div class="dept-card">
+                    <h3>Electronics</h3>
+                    <p>Click to see subjects</p>
+                    <div class="subjects">
+                        <div>• Digital Electronics</div>
+                        <div>• Communication</div>
+                        <div>• VLSI Design</div>
+                        <div>• Microprocessors</div>
+                        <div>• Control Systems</div>
+                        <div>• Signal Processing</div>
+                    </div>
+                </div>
+
+                <div class="dept-card">
+                    <h3>Mechanical</h3>
+                    <p>Click to see subjects</p>
+                    <div class="subjects">
+                        <div>• Thermodynamics</div>
+                        <div>• Fluid Mechanics</div>
+                        <div>• Machine Design</div>
+                        <div>• Heat Transfer</div>
+                        <div>• Manufacturing</div>
+                        <div>• Robotics</div>
+                    </div>
+                </div>
+
+                <div class="dept-card">
+                    <h3>Civil</h3>
+                    <p>Click to see subjects</p>
+                    <div class="subjects">
+                        <div>• Structures</div>
+                        <div>• Geotechnical</div>
+                        <div>• Transportation</div>
+                        <div>• Environmental</div>
+                        <div>• Construction</div>
+                        <div>• Surveying</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Files Section -->
+        <section id="files" class="section">
+            <div class="upload-area">
+                <h2>Upload Files</h2>
+                <form id="uploadForm">
+                    <input type="file" id="fileInput" required>
+                    <select id="deptSelect" required>
+                        <option value="">Select Department</option>
+                        <option value="cs">Computer Science</option>
+                        <option value="ec">Electronics</option>
+                        <option value="me">Mechanical</option>
+                        <option value="ce">Civil</option>
+                    </select>
+                    <input type="text" placeholder="Your Name" required>
+                    <button type="submit" class="primary">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                </form>
+            </div>
+
+            <div class="files-list">
+                <h2>Shared Files</h2>
+                <div class="file-cards" id="filesList">
+                    <!-- Sample File -->
+                    <div class="file-card">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf"></i>
+                            <div>
+                                <h3>Database Notes.pdf</h3>
+                                <p>Uploaded by: John</p>
+                                <span class="dept">Computer Science</span>
+                            </div>
+                        </div>
+                        <a href="#" class="download-btn">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discussions Section -->
+        <section id="discussions" class="section">
+            <div class="discussions-area">
+                <h2>Coming Soon!</h2>
+                <p>Discussion forum will be available in the next update.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple tab switching
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Handle file upload
+        document.getElementById('uploadForm').onsubmit = function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (file) {
+                // Create new file card
+                const fileCard = document.createElement('div');
+                fileCard.className = 'file-card';
+                fileCard.innerHTML = `
+                    <div class="file-info">
+                        <i class="fas fa-file"></i>
+                        <div>
+                            <h3>${file.name}</h3>
+                            <p>Uploaded by: ${e.target.elements[2].value}</p>
+                            <span class="dept">${e.target.elements[1].options[e.target.elements[1].selectedIndex].text}</span>
+                        </div>
+                    </div>
+                    <a href="#" class="download-btn">
+                        <i class="fas fa-download"></i>
+                    </a>
+                `;
+                document.getElementById('filesList').prepend(fileCard);
+                
+                // Update file count
+                const count = document.getElementById('filesList').children.length;
+                document.getElementById('fileCount').textContent = count;
+                
+                // Reset form
+                e.target.reset();
+                alert('File uploaded successfully!');
+            }
+        };
+
+        // Make department cards expandable
+        document.querySelectorAll('.dept-card').forEach(card => {
+            card.onclick = function() {
+                this.classList.toggle('expanded');
+            }
+        });
+    </script>
+</body>
+</html>
